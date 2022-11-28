@@ -75,5 +75,5 @@ jobs:
           done
         env:
           GITHUB_SHA: ${{ github.sha }}
-          BASE_IMAGE: asia.gcr.io/${{ secrets.GCP_PROJECT_ID_PRD }}/hello_cloudrun
+          BASE_IMAGE: ${{ env.IMAGE }}
 
