@@ -27,6 +27,9 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v3
 
+      - run: echo write your tests
+        working-directory: ./nextjs-docker
+
       - id: "auth"
         uses: "google-github-actions/auth@v0"
         with:
