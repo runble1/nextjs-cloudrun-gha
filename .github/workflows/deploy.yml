@@ -26,9 +26,9 @@ jobs:
     steps:
       #- name: Checkout the repository
       #  uses: actions/checkout@v3
-      - name: Set branch name
-        id: vars
-        run: echo ::set-output name=pushed_branch::${GITHUB_REF#refs/*/}
+      #- name: Set branch name
+      #  id: vars
+      #  run: echo ::set-output name=pushed_branch::${GITHUB_REF#refs/*/}
 
       - name: Git checkout
         run: |
