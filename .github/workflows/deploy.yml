@@ -26,9 +26,9 @@ jobs:
     steps:
       #- name: Checkout the repository
       #  uses: actions/checkout@v3
-      #- name: Set branch name
-      #  id: vars
-      #  run: echo ::set-output name=pushed_branch::${GITHUB_REF#refs/*/}
+      - name: Set branch name
+        id: vars
+        run: echo ::set-output name=pushed_branch::${GITHUB_REF#refs/*/}
 
       - name: Git checkout
         run: |
@@ -37,8 +37,8 @@ jobs:
           git sparse-checkout add nextjs-docker
           git checkout
 
-      - run: echo write your tests
-        working-directory: ./nextjs-docker
+      #- run: echo write your tests
+      #  working-directory: ./nextjs-docker
 
       - id: "auth"
         uses: "google-github-actions/auth@v0"
@@ -54,6 +54,7 @@ jobs:
 
       - name: Build a docker image
         run: docker build -t ${{ env.IMAGE }} -f Dockerfile .
+        working-directory: ./nextjs-docker
 
       - name: Push the docker image
         run: docker push ${{ env.IMAGE }}
