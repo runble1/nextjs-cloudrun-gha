@@ -36,9 +36,6 @@ jobs:
           git sparse-checkout add nextjs-docker
           git checkout
 
-      - run: echo write your tests
-        working-directory: ./nextjs-docker
-
       - id: "auth"
         uses: "google-github-actions/auth@v0"
         with:
@@ -53,6 +50,7 @@ jobs:
 
       - name: Build a docker image
         run: docker build -t ${{ env.IMAGE }} -f Dockerfile .
+        working-directory: ./nextjs-docker
 
       - name: Push the docker image
         run: docker push ${{ env.IMAGE }}
