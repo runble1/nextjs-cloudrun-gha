@@ -1,11 +1,5 @@
-variable "project_id" {
-  type = string
-}
-
-variable "repo_name" {
-  description = "github repository name"
-  default     = "runble1/nextjs-cloudrun-gha"
-}
+variable "project_id" {}
+variable "repo_name" {}
 
 locals {
   cloudrun_roles = [

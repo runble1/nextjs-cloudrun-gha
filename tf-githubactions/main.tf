@@ -1,12 +1,13 @@
 module "service_account" {
-  source = "./modules/service_account"
+  source     = "./modules/service_account"
   project_id = var.project_id
+  repo_name  = var.repo_name
 }
 
 module "registry" {
-  source     = "./modules/container_registry"
-  depends_on = [module.service_account]
-  project_id = var.project_id
+  source                = "./modules/container_registry"
+  depends_on            = [module.service_account]
+  project_id            = var.project_id
   service_account_email = module.service_account.service_account_email
 }
 

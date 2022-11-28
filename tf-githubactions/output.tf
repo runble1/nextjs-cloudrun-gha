@@ -1,6 +1,6 @@
 
 output "service_account" {
-    value = module.service_account.service_account_email
+  value = module.service_account.service_account_email
 }
 
 output "url" {

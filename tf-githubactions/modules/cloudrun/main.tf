@@ -15,8 +15,8 @@ variable "container_image" {
 }
 
 resource "google_cloud_run_service" "default" {
-  name     = "cloudrun-hello"
-  location = var.location  
+  name                       = "cloudrun-hello"
+  location                   = var.location
   autogenerate_revision_name = true
   template {
     spec {
