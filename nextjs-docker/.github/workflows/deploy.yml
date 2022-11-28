@@ -11,7 +11,7 @@ on:
 
 env:
   GCP_REGION: ${{ secrets.GCP_REGION_PRD }}
-  IMAGE: asia.gcr.io/${{ secrets.GCP_PROJECT_ID_PRD }}/hello_cloudrun:${{ github.sha }}
+  IMAGE: asia.gcr.io/${{ secrets.GCP_PROJECT_ID_PRD }}/nextjs-docker:${{ github.sha }}
   GOOGLE_IAM_WORKLOAD_IDENTITY_POOL_PROVIDER: ${{ secrets.GOOGLE_IAM_WORKLOAD_IDENTITY_POOL_PROVIDER }}
   SERVICE_ACCOUNT_EMAIL: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
 
@@ -24,19 +24,19 @@ jobs:
       id-token: 'write'
 
     steps:
-      #- name: Checkout the repository
-      #  uses: actions/checkout@v3
-
+      - name: Set branch name
+        id: vars
+        run: echo ::set-output name=pushed_branch::${GITHUB_REF#refs/*/}
+        
+      # nextjs-dockerのみをビルド対象とする
       - name: Git checkout
         run: |
-          git clone --filter=blob:none --no-checkout --depth 1 --sparse https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git .
+          git clone -b ${{ steps.vars.outputs.pushed_branch }} --filter=blob:none --no-checkout --depth 2 --sparse https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git .
           git sparse-checkout init --cone
           git sparse-checkout add nextjs-docker
-          git checkout ${GITHUB_SHA}
+          git checkout
 
-      - name: test
-        run: |
-          ls -la
+      - run: echo write your tests
         working-directory: ./nextjs-docker
 
       - id: "auth"
@@ -53,7 +53,6 @@ jobs:
 
       - name: Build a docker image
         run: docker build -t ${{ env.IMAGE }} -f Dockerfile .
-        working-directory: ./nextjs-docker
 
       - name: Push the docker image
         run: docker push ${{ env.IMAGE }}
