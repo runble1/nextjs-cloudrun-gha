@@ -4,7 +4,7 @@ variable "project_id" {
 
 variable "repo_name" {
   description = "github repository name"
-  default     = "runble1/nextjs-cloudrun"
+  default     = "runble1/nextjs-cloudrun-gha"
 }
 
 locals {
