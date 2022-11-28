@@ -36,9 +36,8 @@ jobs:
           git sparse-checkout init --cone
           git sparse-checkout add nextjs-docker
           git checkout
-
-      #- run: echo write your tests
-      #  working-directory: ./nextjs-docker
+      - name: ls
+        run: ls -la
 
       - id: "auth"
         uses: "google-github-actions/auth@v0"
