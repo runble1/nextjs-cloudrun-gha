@@ -24,8 +24,18 @@ jobs:
       id-token: 'write'
 
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v3
+      #- name: Checkout the repository
+      #  uses: actions/checkout@v3
+      - name: Set branch name
+        id: vars
+        run: echo ::set-output name=pushed_branch::${GITHUB_REF#refs/*/}
+
+      - name: Git checkout
+        run: |
+          git clone -b ${{ steps.vars.outputs.pushed_branch }} --filter=blob:none --no-checkout --depth 2 --sparse https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git .
+          git sparse-checkout init --cone
+          git sparse-checkout add nextjs-docker
+          git checkout
 
       - run: echo write your tests
         working-directory: ./nextjs-docker
