@@ -3,8 +3,8 @@ on:
   push:
     branches:
       - "main"
-    paths:
-      - nextjs-docker
+    #paths:
+    #  - nextjs-docker
   pull_request:
     branches:
       - "main"
