@@ -28,11 +28,15 @@ jobs:
       #  uses: actions/checkout@v3
       - name: Set branch name
         id: vars
-        run: echo ::set-output name=pushed_branch::${GITHUB_REF#refs/*/}
+        #run: echo ::set-output name=pushed_branch::${GITHUB_REF#refs/*/}
+        run: echo "{pushed_branch}=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+
+      - name: export $GITHUB_OUTPUT
+        run: export $GITHUB_OUTPUT
 
       - name: Git checkout
         run: |
-          git clone -b ${{ steps.vars.outputs.pushed_branch }} --filter=blob:none --no-checkout --depth 1 --sparse https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git .
+          git clone -b $GITHUB_OUTPUT --filter=blob:none --no-checkout --depth 1 --sparse https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git .
           git sparse-checkout init --cone
           git sparse-checkout add nextjs-docker
           git checkout
