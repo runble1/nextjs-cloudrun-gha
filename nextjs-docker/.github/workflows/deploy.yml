@@ -3,8 +3,8 @@ on:
   push:
     branches:
       - "main"
-    #paths:
-    #  - nextjs-docker
+    paths:
+      - nextjs-docker
   pull_request:
     branches:
       - "main"
@@ -27,7 +27,7 @@ jobs:
       - name: Set branch name
         id: vars
         run: echo ::set-output name=pushed_branch::${GITHUB_REF#refs/*/}
-        
+
       # nextjs-dockerのみをビルド対象とする
       - name: Git checkout
         run: |
