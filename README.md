@@ -1,5 +1,10 @@
 # Next.js + CloudRun + Github Actions
 
+## Develpment
+```
+docker run -p 3000:3000 nextjs-docker
+```
+
 ## Usage
 CloudRun + iam + Conatiner Registry
 ```
