@@ -10,6 +10,7 @@ on:
       - 'main'
 
 env:
+  REGISTRY_LOCATION: 'asia-northeast1-docker.pkg.dev' #随時変更
   GCP_REGION: ${{ secrets.GCP_REGION_PRD }}
   IMAGE: asia-northeast1-docker.pkg.dev/be-nishiyama-wataru/nextjs-docker/nextjs-cloudrun:${{ github.sha }}
   GOOGLE_IAM_WORKLOAD_IDENTITY_POOL_PROVIDER: ${{ secrets.GOOGLE_IAM_WORKLOAD_IDENTITY_POOL_PROVIDER }}
@@ -26,7 +27,6 @@ jobs:
     steps:
       - name: Set branch name
         id: git-buranch
-        #run: echo ::set-output name=pushed_branch::${GITHUB_REF#refs/*/}
         run: echo "pushed_branch=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
 
       # nextjs-dockerのみをビルド対象とする
@@ -50,8 +50,9 @@ jobs:
       #- name: Use gcloud CLI
       #  run: gcloud info
 
+      # レジストリによって認証先を変える必要あり
       - name: Authorize Docker push
-        run: gcloud auth configure-docker asia-northeast1-docker.pkg.dev
+        run: gcloud auth configure-docker ${{ env.REGISTRY_LOCATION }}
 
       - name: Build a docker image
         run: docker build -t ${{ env.IMAGE }} -f Dockerfile .
