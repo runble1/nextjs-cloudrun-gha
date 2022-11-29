@@ -7,8 +7,12 @@ output "url" {
   value = module.cloudrun.url
 }
 
-output "container_registry" {
-  value = module.registry.container_registry_id
+output "artifact_registry_repository_id" {
+  value = module.artifact_registry.artifact_registry_repository_id
+}
+
+output "artifact_registry_repository_name" {
+  value = module.artifact_registry.artifact_registry_repository_name
 }
 
 output "google_iam_workload_identity_pool_provider_github_name" {

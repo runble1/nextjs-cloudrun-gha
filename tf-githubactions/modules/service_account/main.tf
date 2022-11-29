@@ -9,27 +9,23 @@ locals {
 }
 
 resource "google_service_account" "github_actions" {
-  project      = var.project_id
-  account_id   = "github-actions"
+  account_id   = "github-actions1"
   display_name = "A service account for GitHub Actions"
   description  = "link to Workload Identity Pool used by github actions"
 }
 
 resource "google_iam_workload_identity_pool" "github" {
-  #provider                  = google-beta
-  project                   = var.project_id
-  workload_identity_pool_id = "github-terraform"
-  display_name              = "github-terraform"
+  workload_identity_pool_id = "github-actions1"
+  display_name              = "For Github Actions"
   description               = "Workload Identity Pool for GitHub Actions"
 }
 
 resource "google_iam_workload_identity_pool_provider" "github" {
-  #provider                           = google-beta
-  project                            = var.project_id
+  workload_identity_pool_provider_id = "github-actions-provider1"
   workload_identity_pool_id          = google_iam_workload_identity_pool.github.workload_identity_pool_id
-  workload_identity_pool_provider_id = "github-provider"
-  display_name                       = "github actions provider"
-  description                        = "OIDC identity pool provider for execute github actions"
+
+  display_name = "For Github Actions Provider"
+  description  = "OIDC identity pool provider for execute github actions"
 
   attribute_mapping = {
     "google.subject"       = "assertion.sub"

@@ -1,6 +1,4 @@
-variable "service_account_email" {
-  type = string
-}
+variable "service_account_email" {}
 
 variable "location" {
   description = "A location of a cloud run instance"
