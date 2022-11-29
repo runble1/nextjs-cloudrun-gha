@@ -25,14 +25,14 @@ jobs:
 
     steps:
       - name: Set branch name
-        id: vars
+        id: git-buranch
         #run: echo ::set-output name=pushed_branch::${GITHUB_REF#refs/*/}
-        run: echo "pushed_branch=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+        run: echo "pushed_branch=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
 
       # nextjs-dockerのみをビルド対象とする
       - name: Git checkout
         run: |
-          git clone -b ${{ env.pushed_branch }} --filter=blob:none --no-checkout --depth 2 --sparse https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git .
+          git clone -b ${{ steps.git-buranch.outputs.pushed_branch }} --filter=blob:none --no-checkout --depth 2 --sparse https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git .
           git sparse-checkout init --cone
           git sparse-checkout add nextjs-docker
           git checkout
