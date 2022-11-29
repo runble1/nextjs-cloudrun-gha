@@ -11,8 +11,8 @@ on:
 
 env:
   GCP_REGION: ${{ secrets.GCP_REGION_PRD }}
-  IMAGE: asia.gcr.io/${{ secrets.GCP_PROJECT_ID_PRD }}/hello_cloudrun:${{ github.sha }}
-  #IMAGE: asia-northeast1-docker.pkg.dev/be-nishiyama-wataru/nextjs-docker:${{ github.sha }}
+  #IMAGE: asia.gcr.io/${{ secrets.GCP_PROJECT_ID_PRD }}/hello_cloudrun:${{ github.sha }}
+  IMAGE: asia-northeast1-docker.pkg.dev/be-nishiyama-wataru/nextjs-docker:${{ github.sha }}
   GOOGLE_IAM_WORKLOAD_IDENTITY_POOL_PROVIDER: ${{ secrets.GOOGLE_IAM_WORKLOAD_IDENTITY_POOL_PROVIDER }}
   SERVICE_ACCOUNT_EMAIL: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
 
@@ -48,7 +48,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v0
 
       - name: Authorize Docker push
-        run: gcloud auth configure-docker
+        run: gcloud auth configure-docker asia-docker.pkg.dev
 
       - name: Build a docker image
         run: docker build -t ${{ env.IMAGE }} -f Dockerfile .
