@@ -27,7 +27,7 @@ jobs:
       - name: Set branch name
         id: vars
         #run: echo ::set-output name=pushed_branch::${GITHUB_REF#refs/*/}
-        run: echo "pushed_branch=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+        run: echo "pushed_branch=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
       # nextjs-dockerのみをビルド対象とする
       - name: Git checkout
