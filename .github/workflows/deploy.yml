@@ -2,12 +2,12 @@ name: deploy
 on:
   push:
     branches:
-      - "main"
+      - 'main'
     paths:
       - 'nextjs-docker/**'
   pull_request:
     branches:
-      - "main"
+      - 'main'
 
 env:
   GCP_REGION: ${{ secrets.GCP_REGION_PRD }}
@@ -36,7 +36,8 @@ jobs:
           git sparse-checkout add nextjs-docker
           git checkout
 
-      - id: "auth"
+      - name: Auth Google Cloud
+        id: auth
         uses: "google-github-actions/auth@v0"
         with:
           workload_identity_provider: "${{ env.GOOGLE_IAM_WORKLOAD_IDENTITY_POOL_PROVIDER }}"
