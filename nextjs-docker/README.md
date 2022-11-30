@@ -1,5 +1,5 @@
-#
-https://zenn.dev/ossamoon/articles/8b784b2f6aaeb2
+# Next.js + Docker
+https://omkz.net/next-js-prisma/
 
 ## With Docker
 

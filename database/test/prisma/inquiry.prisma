@@ -1,0 +1,7 @@
+model Inquiry {
+  id Int @default(autoincrement()) @id
+  name String
+  email String
+  subject String
+  message String
+}
